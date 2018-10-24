@@ -46,9 +46,14 @@ def action_wrapper(hermes, intentMessage, conf):
     
     r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date='+now.strftime("%Y-%m-%d"))
     doc = untangle.parse(r.content)
-    rise = doc.astrodata.time.location.sun['rise']
-    rise = datetime.datetime.strptime(rise[:19], '%Y-%m-%dT%H:%M:%S')
-    result_sentence = rise.strftime("%H %M")
+
+    sun_rise = doc.astrodata.time.location.sun['rise']
+    sun_rise = datetime.datetime.strptime(sun_rise[:19], '%Y-%m-%dT%H:%M:%S')
+    
+    sun_set = doc.astrodata.time.location.set['rise']
+    sun_set = datetime.datetime.strptime(sun_set[:19], '%Y-%m-%dT%H:%M:%S')
+    
+    result_sentence = 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
     
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
