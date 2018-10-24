@@ -6,6 +6,8 @@ from hermes_python.hermes import Hermes
 from hermes_python.ontology import *
 import io
 import requests
+import datetime
+from xml.dom import minidom
 
 CONFIGURATION_ENCODING_FORMAT = "utf-8"
 CONFIG_INI = "config.ini"
@@ -30,14 +32,22 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
-    r = requests.get('https://en.wikipedia.org/api/rest_v1/page/summary/Felinae')
-    data = r.json()
-    result_sentence = data['extract']
+    #r = requests.get('https://en.wikipedia.org/api/rest_v1/page/summary/Felinae')
+    #data = r.json()
+    #result_sentence = data['extract']
     
-    #result_sentence = 'rainbow pets'
+    now = datetime.datetime.now()
+    date = now.strftime("%Y %m %d")
+    time = now.strftime("%H %M")
+    
+    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date=now.strftime("%Y-%m-%d")')
+    xmldoc = minidom.parse(r)
+    
+    itemlist = xmldoc.getElementsByTagName('sun')
+    result_sentence = itemlist[0].attributes['rise'].value
+    
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
-    
 
 
 if __name__ == "__main__":
