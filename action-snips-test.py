@@ -50,7 +50,7 @@ def action_wrapper(hermes, intentMessage, conf):
     sun_rise = doc.astrodata.time.location.sun['rise']
     sun_rise = datetime.datetime.strptime(sun_rise[:19], '%Y-%m-%dT%H:%M:%S')
     
-    sun_set = doc.astrodata.time.location.set['rise']
+    sun_set = doc.astrodata.time.location.sun['set']
     sun_set = datetime.datetime.strptime(sun_set[:19], '%Y-%m-%dT%H:%M:%S')
     
     result_sentence = 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
