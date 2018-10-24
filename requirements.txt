@@ -3,4 +3,4 @@ hermes-python>=0.1
 
 requests
 datetime
-xml
+untangle
