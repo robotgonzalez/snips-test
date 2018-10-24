@@ -30,7 +30,11 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
-    result_sentence = 'rainbow pets'
+    r = requests.get('https://en.wikipedia.org/api/rest_v1/page/summary/Felinae')
+    data = r.json()
+    result_sentence = data['extract']
+    
+    #result_sentence = 'rainbow pets'
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
     
