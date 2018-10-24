@@ -40,10 +40,10 @@ def action_wrapper(hermes, intentMessage, conf):
     date = now.strftime("%Y %m %d")
     time = now.strftime("%H %M")
     
-    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date=now.strftime("%Y-%m-%d")')
-    xml = minidom.parse(r)
+    print(date)
     
-    doc = untangle.parse(xml)
+    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date=now.strftime("%Y-%m-%d")')
+    doc = untangle.parse(r)
     result_sentence = doc.astrodata.time.location.sun['rise']
     
     current_session_id = intentMessage.session_id
