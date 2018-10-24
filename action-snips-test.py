@@ -44,7 +44,7 @@ def action_wrapper(hermes, intentMessage, conf):
     
     #print(date)
     
-    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date='+now.strftime("%Y-%m-%d")+')
+    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date='+now.strftime("%Y-%m-%d"))
     doc = untangle.parse(r)
     result_sentence = doc.astrodata.time.location.sun['rise']
     
