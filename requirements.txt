@@ -2,4 +2,5 @@
 hermes-python>=0.1
 
 requests
-# More dependency goes here.. 
+datetime
+xml
