@@ -7,7 +7,7 @@ from hermes_python.ontology import *
 import io
 import requests
 import datetime
-from xml.dom import minidom
+import untangle
 
 CONFIGURATION_ENCODING_FORMAT = "utf-8"
 CONFIG_INI = "config.ini"
@@ -41,10 +41,10 @@ def action_wrapper(hermes, intentMessage, conf):
     time = now.strftime("%H %M")
     
     r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat=62.308611&lon=6.937222&date=now.strftime("%Y-%m-%d")')
-    xmldoc = minidom.parse(r)
+    xml = minidom.parse(r)
     
-    itemlist = xmldoc.getElementsByTagName('sun')
-    result_sentence = itemlist[0].attributes['rise'].value
+    doc = untangle.parse(xml)
+    result_sentence = doc.astrodata.time.location.sun['rise']
     
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
