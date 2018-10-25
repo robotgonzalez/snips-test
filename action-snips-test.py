@@ -106,9 +106,22 @@ def date_now():
     return date
 
 
+def latest_news_nrk():
+import requests
+import untangle
+r = requests.get('https://www.nrk.no/toppsaker.rss')
+data = untangle.parse(r.content)
+
+print 'here are the latest top news - '+\
+data.rss.channel.item[0].title.cdata+' - '+data.rss.channel.item[0].description.cdata+' - '+\
+data.rss.channel.item[1].title.cdata+' - '+data.rss.channel.item[1].description.cdata+' - '+\
+data.rss.channel.item[2].title.cdata+' - '+data.rss.channel.item[2].description.cdata
+
+
 def wikipedia():
     r = requests.get('https://en.wikipedia.org/api/rest_v1/page/summary/Felinae')
     data = r.json()
+    
     return = data['extract']
 
 
