@@ -39,19 +39,17 @@ def read_configuration_file(configuration_file):
 #    return switcher.get(argument, "nothing")
 
 
-def precipitation_next_hours():
-    r = requests.get('https://api.met.no/weatherapi/nowcast/0.9/?lat='+latitude+'&lon='+longitude)
-    # data = untangle.parse(r.content)
+# def precipitation_next_hours():
+#     r = requests.get('https://api.met.no/weatherapi/nowcast/0.9/?lat='+latitude+'&lon='+longitude)
+#     data = untangle.parse(r.content)
     
-    millimeter = 0
-    # times = data.weatherdata.product.time
-
-    return millimeter
+#     millimeter = 0
+#     times = data.weatherdata.product.time
     
-    # for t in times:
-    #    millimeter +=  float(t.location.precipitation['value'])
+#     for t in times:
+#        millimeter +=  float(t.location.precipitation['value'])
     
-    # return 'in the next hours it will rain an average of '+str(millimeter / len(times))+' millimeters per hour'
+#     return 'in the next hours it will rain an average of '+str(millimeter / len(times))+' millimeters per hour'
 
 
 # def extrem_data_norway():
@@ -97,10 +95,10 @@ def precipitation_next_hours():
 #     return 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
 
 
-# def date_now():
-#     date = now.strftime("%Y %m %d")
+def date_now():
+    date = now.strftime("%Y %m %d")
     
-#     return date
+    return date
 
 
 # def latest_news_nrk():
@@ -126,7 +124,7 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
-    result_sentence = precipitation_next_hours()
+    result_sentence = date_now()
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
 
