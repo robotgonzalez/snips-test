@@ -39,17 +39,17 @@ def read_configuration_file(configuration_file):
 #    return switcher.get(argument, "nothing")
 
 
-# def precipitation_next_hours():
-#     r = requests.get('https://api.met.no/weatherapi/nowcast/0.9/?lat='+latitude+'&lon='+longitude)
-#     data = untangle.parse(r.content)
+def precipitation_next_hours():
+    r = requests.get('https://api.met.no/weatherapi/nowcast/0.9/?lat='+latitude+'&lon='+longitude)
+    data = untangle.parse(r.content)
     
-#     millimeter = 0
-#     times = data.weatherdata.product.time
+    millimeter = 0
+    times = data.weatherdata.product.time
     
-#     for t in times:
-#        millimeter +=  float(t.location.precipitation['value'])
+    for t in times:
+       millimeter +=  float(t.location.precipitation['value'])
     
-#     return 'in the next hours it will rain an average of '+str(millimeter / len(times))+' millimeters per hour'
+    return 'in the next hours it will rain an average of '+str(millimeter / len(times))+' millimeters per hour'
 
 
 # def extrem_data_norway():
@@ -125,7 +125,7 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 def action_wrapper(hermes, intentMessage, conf):
     current_session_id = intentMessage.session_id
-    hermes.publish_end_session(current_session_id, 'hello')
+    hermes.publish_end_session(current_session_id, precipitation_next_hours())
 
 
 if __name__ == "__main__":
