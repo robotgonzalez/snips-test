@@ -77,19 +77,15 @@ def precipitation_next_hours():
 #     return 'the moon phase today is '+data.astrodata.time.location.moon['phase']
 
 
-# def sun_rise_set():
-#     now = datetime.datetime.now()
-    
-#     r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat='+latitude+'&lon='+longitude+'&date='+now.strftime("%Y-%m-%d"))
-#     data = untangle.parse(r.content)
-    
-#     sun_rise = data.astrodata.time.location.sun['rise']
-#     sun_rise = datetime.datetime.strptime(sun_rise[:19], '%Y-%m-%dT%H:%M:%S')
-    
-#     sun_set = data.astrodata.time.location.sun['set']
-#     sun_set = datetime.datetime.strptime(sun_set[:19], '%Y-%m-%dT%H:%M:%S')
-    
-#     return 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
+def sun_rise_set():
+    now = datetime.datetime.now()
+    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat='+latitude+'&lon='+longitude+'&date='+now.strftime("%Y-%m-%d"))
+    data = untangle.parse(r.content)
+    sun_rise = data.astrodata.time.location.sun['rise']
+    sun_rise = datetime.datetime.strptime(sun_rise[:19], '%Y-%m-%dT%H:%M:%S')
+    sun_set = data.astrodata.time.location.sun['set']
+    sun_set = datetime.datetime.strptime(sun_set[:19], '%Y-%m-%dT%H:%M:%S')
+    return 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
 
 
 def date_now():
@@ -117,7 +113,7 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
-    result_sentence = precipitation_next_hours()
+    result_sentence = sun_rise_set()
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
 
