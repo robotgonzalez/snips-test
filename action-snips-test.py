@@ -77,7 +77,7 @@ def moon_phase():
     return 'the moon phase today is '+data.astrodata.time.location.moon['phase']
 
 
-def sun_rise_set():
+def sun_rise_set(hermes, intentMessage):
     now = datetime.datetime.now()
 
     r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat='+latitude+'&lon='+longitude+'&date='+now.strftime("%Y-%m-%d"))
@@ -89,7 +89,10 @@ def sun_rise_set():
     sun_set = data.astrodata.time.location.sun['set']
     sun_set = datetime.datetime.strptime(sun_set[:19], '%Y-%m-%dT%H:%M:%S')
 
-    return 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
+    result_sentence = 'the sun rises at '+sun_rise.strftime("%H %M").replace('0', '')+' and sets at '+sun_set.strftime("%H %M").replace('0', '')
+
+    current_session_id = intentMessage.session_id
+    hermes.publish_end_session(current_session_id, result_sentence)
 
 
 def date_now():
@@ -130,5 +133,5 @@ def latest_news_nrk(hermes, intentMessage):
 if __name__ == "__main__":
     with Hermes("localhost:1883") as h:
         h.subscribe_intent("gonzalez:News", latest_news_nrk) \
-            subscribe_intent("gonzalez:Sun", latest_news_nrk) \
+            subscribe_intent("gonzalez:Sun", sun_rise_set) \
          .start()
