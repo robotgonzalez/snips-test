@@ -68,13 +68,13 @@ def precipitation_next_hours():
 #     the warmest place was '+temperature_max_place+' with '+temperature_max_value+' degree celsius.'
 
 
-# def moon_phase():
-#     now = datetime.datetime.now()
-    
-#     r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat='+latitude+'&lon='+longitude+'&date='+now.strftime("%Y-%m-%d"))
-#     data = untangle.parse(r.content)
-    
-#     return 'the moon phase today is '+data.astrodata.time.location.moon['phase']
+def moon_phase():
+    now = datetime.datetime.now()
+
+    r = requests.get('https://api.met.no/weatherapi/sunrise/1.1/?lat='+latitude+'&lon='+longitude+'&date='+now.strftime("%Y-%m-%d"))
+    data = untangle.parse(r.content)
+
+    return 'the moon phase today is '+data.astrodata.time.location.moon['phase']
 
 
 def sun_rise_set():
@@ -113,7 +113,7 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
-    result_sentence = sun_rise_set()
+    result_sentence = moon_phase()
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
 
