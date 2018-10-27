@@ -40,14 +40,13 @@ def read_configuration_file(configuration_file):
 
 
 def precipitation_next_hours():
-
-    return 'hello nusse'
-
-    # r = requests.get('https://api.met.no/weatherapi/nowcast/0.9/?lat='+latitude+'&lon='+longitude)
-    # data = untangle.parse(r.content)
+    r = requests.get('https://api.met.no/weatherapi/nowcast/0.9/?lat='+latitude+'&lon='+longitude)
+    data = untangle.parse(r.content)
     
-    # millimeter = 0
-    # times = data.weatherdata.product.time
+    millimeter = 0
+    times = data.weatherdata.product.time
+
+    return len(times)+' '+millimeter
     
     # for t in times:
     #    millimeter +=  float(t.location.precipitation['value'])
