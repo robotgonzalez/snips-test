@@ -96,6 +96,7 @@ def read_configuration_file(configuration_file):
 
 
 def date_now():
+    now = datetime.datetime.now()
     date = now.strftime("%Y %m %d")
     
     return date
