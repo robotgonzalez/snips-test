@@ -44,9 +44,9 @@ def precipitation_next_hours():
     data = untangle.parse(r.content)
     
     millimeter = 0
-    times = data.weatherdata.product.time
+    # times = data.weatherdata.product.time
 
-    return len(times)+' '+millimeter
+    return len(data)+' '+millimeter
     
     # for t in times:
     #    millimeter +=  float(t.location.precipitation['value'])
@@ -126,8 +126,9 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
+    result_sentence = precipitation_next_hours()
     current_session_id = intentMessage.session_id
-    hermes.publish_end_session(current_session_id, precipitation_next_hours())
+    hermes.publish_end_session(current_session_id, result_sentence)
 
 
 if __name__ == "__main__":
