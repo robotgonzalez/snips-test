@@ -98,18 +98,13 @@ def read_configuration_file(configuration_file):
 def date_now():
     now = datetime.datetime.now()
     date = now.strftime("%Y %m %d")
-    
     return date
 
 
-# def latest_news_nrk():
-#     r = requests.get('https://www.nrk.no/toppsaker.rss')
-#     data = untangle.parse(r.content)
-
-#     return 'here are the latest top news - '+\
-#     data.rss.channel.item[0].title.cdata+' - '+data.rss.channel.item[0].description.cdata+' - '+\
-#     data.rss.channel.item[1].title.cdata+' - '+data.rss.channel.item[1].description.cdata+' - '+\
-#     data.rss.channel.item[2].title.cdata+' - '+data.rss.channel.item[2].description.cdata
+def latest_news_nrk():
+    r = requests.get('https://www.nrk.no/toppsaker.rss')
+    data = untangle.parse(r.content)
+    return 'here are the latest top news - '+data.rss.channel.item[0].title.cdata+' - '+data.rss.channel.item[0].description.cdata+' - '+data.rss.channel.item[1].title.cdata+' - '+data.rss.channel.item[1].description.cdata+' - '+data.rss.channel.item[2].title.cdata+' - '+data.rss.channel.item[2].description.cdata
 
 
 # def wikipedia():
@@ -125,7 +120,7 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 
 def action_wrapper(hermes, intentMessage, conf):
-    result_sentence = date_now()
+    result_sentence = latest_news_nrk()
     current_session_id = intentMessage.session_id
     hermes.publish_end_session(current_session_id, result_sentence)
 
