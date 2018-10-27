@@ -49,7 +49,7 @@ def precipitation_next_hours():
     return 'in the next hours it will rain an average of '+str(millimeter / len(times))+' millimeters per hour'
 
 
-def extrem_data_norway():
+def extreme_data_norway():
     r = requests.get('https://api.met.no/weatherapi/extremeswwc/1.2/')
     data = untangle.parse(r.content)
 
@@ -132,6 +132,9 @@ def latest_news_nrk(hermes, intentMessage):
 
 if __name__ == "__main__":
     with Hermes("localhost:1883") as h:
-        h.subscribe_intent("gonzalez:News", latest_news_nrk) \
+        h.subscribe_intent("gonzalez:Extreme", extreme_data_norway) \
+        .subscribe_intent("gonzalez:Moon", moon_phase) \
+        .subscribe_intent("gonzalez:News", latest_news_nrk) \
+        .subscribe_intent("gonzalez:Rain", precipitation_next_hours) \
         .subscribe_intent("gonzalez:Sun", sun_rise_set) \
         .loop_forever()
